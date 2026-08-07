@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>北海道旅行コンシェルジュ Ver7</title>
+<style>
+:root{
+  --prepare:#fff8e1; --prepare-b:#ffe082;
+  --depart:#e8f5e9;  --depart-b:#a5d6a7;
+  --arrive:#e3f2fd;  --arrive-b:#90caf9;
+  --other:#f3f3f6;   --other-b:#d5d5df;
+}
+*{box-sizing:border-box}
+body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;margin:0;background:#f4f7fb;color:#1a2027;padding-bottom:72px}
+header{background:#1565c0;color:#fff;padding:16px;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+header h1{margin:0;font-size:1.15rem}
+header .sub{font-size:.82rem;opacity:.9;margin-top:4px}
+main{max-width:1000px;margin:auto;padding:16px}
+.card{background:#fff;border-radius:10px;padding:14px;margin:14px 0;box-shadow:0 2px 6px rgba(0,0,0,.07)}
+.card h2{margin:0 0 10px;font-size:1rem;border-left:5px solid #1565c0;padding-left:8px}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th,td{border:1px solid #dfe3ea;padding:7px 8px;text-align:left;vertical-align:top}
+th{background:#eaf2ff}
+td.time{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums;font-weight:600}
+tr.prepare{background:var(--prepare)}
+tr.depart{background:var(--depart)}
+tr.arrive{background:var(--arrive)}
+tr.other{background:var(--other)}
+td.tag{white-space:nowrap;font-weight:600}
+details{background:#fff;border-radius:10px;margin:14px 0;box-shadow:0 2px 6px rgba(0,0,0,.07);overflow:hidden}
+summary{cursor:pointer;padding:14px;font-weight:700;font-size:1rem;background:#f0f5ff;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"▸ ";color:#1565c0}
+details[open] summary::before{content:"▾ "}
+details .body{padding:0 14px 14px}
+.tbd{color:#b71c1c;font-weight:600}
+.note{font-size:.82rem;color:#546e7a;margin:6px 0 0}
+.legend{display:flex;flex-wrap:wrap;gap:10px;font-size:.85rem;margin-top:6px}
+.legend span{padding:3px 10px;border-radius:14px;border:1px solid}
+.lg-p{background:var(--prepare);border-color:var(--prepare-b)}
+.lg-d{background:var(--depart);border-color:var(--depart-b)}
+.lg-a{background:var(--arrive);border-color:var(--arrive-b)}
+.lg-o{background:var(--other);border-color:var(--other-b)}
+ul{margin:6px 0;padding-left:20px}
+li{margin:3px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:640px){.grid{grid-template-columns:1fr}}
+.ok{color:#2e7d32;font-weight:700}
+.todo{color:#b71c1c;font-weight:700}
+a{color:#1565c0}
+.check{list-style:none;padding-left:0;margin:4px 0}
+.check.cols{columns:2;column-gap:24px}
+@media(max-width:640px){.check.cols{columns:1}}
+.check li{display:flex;align-items:center;gap:8px;break-inside:avoid}
+.check input[type=checkbox]{width:18px;height:18px;flex:none}
+.subhead{font-weight:700;margin:10px 0 4px;font-size:.9rem;color:#37474f}
+.form-tbl td{padding:5px 8px}
+.form-tbl td:first-child{white-space:nowrap;color:#546e7a;font-size:.85rem;width:34%}
+.form-tbl input{width:100%;border:none;border-bottom:1px solid #bbb;padding:4px 2px;font-size:.9rem;background:transparent}
+.memo{width:100%;min-height:64px;border:1px solid #dfe3ea;border-radius:6px;padding:8px;font:inherit;resize:vertical}
+</style>
+</head>
+<body>
+<header>
+  <h1>北海道旅行コンシェルジュ Ver7</h1>
+  <div class="sub">2026/8/8（土）〜 8/12（水）｜家族3名（旭川で友人合流）｜旭川2泊・小樽1泊・函館1泊</div>
+</header>
+
+<main>
+
+<div class="card">
+  <h2>区分の色分け</h2>
+  <div class="legend">
+    <span class="lg-p">準備開始</span>
+    <span class="lg-d">出発</span>
+    <span class="lg-a">到着目標</span>
+    <span class="lg-o">観光・食事・移動</span>
+  </div>
+  <p class="note">準備開始＝身支度・荷物確認を始める時刻／出発＝その場所を離れる時刻／到着目標＝余裕を持って着きたい時刻。<span class="tbd">赤字＝未確定</span>。</p>
+</div>
+
+<div class="card">
+  <h2>絶対に遅れられない時刻</h2>
+  <table>
+    <tr><th>日付</th><th>時刻</th><th>内容</th></tr>
+    <tr class="arrive"><td>8/8</td><td class="time">04:20</td><td>相模大野駅北口（04:40 リムジンバス）</td></tr>
+    <tr class="arrive"><td>8/8</td><td class="time">05:55</td><td>羽田空港 第1ターミナル（07:15 JAL503）</td></tr>
+    <tr class="depart"><td>8/11</td><td class="time">07:43</td><td>北斗84号 札幌発（07:30 ホーム到着目標）</td></tr>
+    <tr class="arrive"><td>8/12</td><td class="time">14:45</td><td>函館空港（16:45 AIRDO HD060）</td></tr>
+  </table>
+  <p class="note">乗り遅れると旅程が破綻する固定時刻。ここだけは「到着目標」を最優先。</p>
+</div>
+
+<div class="card">
+  <h2>旅行中の判断ルール</h2>
+  <ul>
+    <li>到着目標に5〜10分遅れそうなら、次の行動（食事・買い物）を短縮して調整する。</li>
+    <li>駅・空港では「出発時刻」ではなく「到着目標」を優先する。</li>
+    <li>ホテル出発前は必ず忘れ物チェックを実施する。</li>
+  </ul>
+</div>
+
+<h2 style="margin:18px 4px 4px;font-size:1.05rem">日別タイムライン</h2>
+
+<details open>
+  <summary>8/8（土） 相模大野 → 羽田 → 新千歳 → 旭川</summary>
+  <div class="body">
+    <table>
+      <tr><th>区分</th><th>時刻</th><th>内容</th></tr>
+      <tr class="prepare"><td class="tag">準備開始</td><td class="time">03:45</td><td>起床・身支度・最終荷物確認</td></tr>
+      <tr class="arrive"><td class="tag">到着目標</td><td class="time">04:20</td><td>相模大野駅北口</td></tr>
+      <tr class="depart"><td class="tag">出発</td><td class="time">04:40</td><td>空港リムジンバス（相模大野駅北口発・3名）</td></tr>
+      <tr class="arrive"><td class="tag">到着目標</td><td class="time">05:55</td><td>羽田空港 第1ターミナル</td></tr>
+      <tr class="prepare"><td class="tag">準備</td><td class="time">06:00〜06:15</td><td>荷物預け・朝食</td></tr>
+      <tr class="arrive"><td class="tag">到着目標</td><td class="time">06:40</td><td>保安検査通過</td></tr>
+      <tr class="arrive"><td class="tag">到着目標</td><td class="time">07:05</td><td>搭乗口付近</td></tr>
+      <tr class="depart"><td class="tag">出発</td><td class="time">07:15頃</td><td>JAL503 羽田発</td></tr>
+      <tr class="arrive"><td class="tag">到着</td><td class="time">08:45頃</td><td>新千歳空港</td></tr>
+      <tr class="other"><td class="tag">移動</td><td class="time">09:00以降</td><td>JRで札幌へ</td></tr>
+      <tr class="other"><td class="tag">移動</td><td class="time tbd">未定（仮11:00頃）</td><td>札幌 → 旭川 特急　<span class="tbd">※特急は未予約</span></td></tr>
+      <tr class="arrive"><td class="tag">到着</td><td class="time">12:00〜13:00頃</td><td>旭川駅・友人と合流</td></tr>
+      <tr class="other"><td class="tag">宿泊</td><td class="time tbd">未定</td><td>旭川ホテル（<span class="tbd">未確定</span>）</td></tr>
+    </table>
+    <p class="note">TODO：<span class="ok">✔ JAL503</span>・<span class="ok">✔ リムジンバス</span>／<span class="todo">□ 札幌→旭川 特急</span>・<span class="todo">□ 旭川ホテル</span>・<span class="todo">□ 友人との集合場所・時刻</span></p>
+  </div>
+</details>
+
+<details>
+  <summary>8/9（日） 旭川・美瑛観光</summary>
+  <div class="body">
+    <table>
+      <tr><th>区分</th><th>時刻</th><th>内容</th></tr>
+      <tr class="prepare"><td class="tag">準備開始</td><td class="time">07:00頃</td><td>朝食・身支度</td></tr>
+      <tr class="depart"><td class="tag">出発</td><td class="time">08:30頃</td><td>ホテル出発</td></tr>
+      <tr class="arrive"><td class="tag">到着目標</td><td class="time">09:30頃</td><td>美瑛方面</td></tr>
+      <tr class="other"><td class="tag">観光</td><td class="time">日中</td><td><span class="tbd">美瑛中心（四季彩の丘・青い池・白ひげの滝・パッチワークの路）か、旭山動物園中心（旭山動物園・上野ファーム等）かを決定</span></td></tr>
+      <tr class="arrive"><td class="tag">帰着</td><td class="time">17:00〜18:00頃</td><td>旭川</td></tr>
+      <tr class="other"><td class="tag">夕食</td><td class="time tbd">未定</td><td>友人と食事</td></tr>
+    </table>
+    <p class="note">TODO：<span class="todo">□ 友人が車を出せるか確認</span>・<span class="todo">□ 美瑛／旭山動物園の決定</span>・<span class="todo">□ 必要ならレンタカー予約</span>・<span class="todo">□ 食事場所</span></p>
+  </div>
+</details>
+
+<details>
+  <summary>8/10（月） 旭川 → 札幌 → 小樽</summary>
+  <div class="body">
+    <table>
+      <tr><th>区分</th><th>時刻</th><th>内容</th></tr>
+      <tr class="prepare"><td class="tag">準備開始</td><td class="time">07:30頃</td><td>朝食・荷造り</td></tr>
+      <tr class="depart"><td class="tag">出発</td><td class="time">08:40頃</td><td>ホテル出発</td></tr>
+      <tr class="arrive"><td class="tag">到着目標</td><td class="time">09:00頃</td><td>旭川駅</td></tr>
+      <tr class="other"><td class="tag">移動</td><td class="time tbd">未定</td><td>旭川 → 札幌 特急　<span class="tbd">※未予約</span></td></tr>
+      <tr class="other"><td class="tag">移動</td><td class="time tbd">未定</td><td>札幌 → 小樽</td></tr>
+      <tr class="arrive"><td class="tag">到着</td><td class="time">11:30〜12:00頃</td><td>小樽駅</td></tr>
+      <tr class="other"><td class="tag">昼食</td><td class="time">12:00頃</td><td>海鮮・寿司候補（三角市場ほか）</td></tr>
+      <tr class="other"><td class="tag">観光</td><td class="time">午後</td><td>小樽運河・北一硝子・オルゴール堂・堺町通り</td></tr>
+      <tr class="other"><td class="tag">夕食</td><td class="time">18:00頃</td><td>小樽寿司など</td></tr>
+      <tr class="other"><td class="tag">散策</td><td class="time">日没後</td><td>小樽運河</td></tr>
+      <tr class="other"><td class="tag">宿泊</td><td class="time tbd">未定</td><td>小樽ホテル（<span class="tbd">未確定</span>）</td></tr>
+    </table>
+    <p class="note">TODO：<span class="todo">□ 旭川→札幌 特急</span>・<span class="todo">□ 小樽ホテル</span>・<span class="todo">□ 夕食候補</span>・<span class="todo">□ 翌朝の小樽駅までの動線</span></p>
+  </div>
+</details>
+
+<details>
+  <summary>8/11（火） 小樽 → 札幌 → 北斗84号 → 函館</summary>
+  <div class="body">
+    <table>
+      <tr><th>区分</th><th>時刻</th><th>内容</th></tr>
+      <tr class="prepare"><td class="tag">準備開始</td><td class="time">05:30頃</td><td>起床・身支度・チェックアウト準備</td></tr>
+      <tr class="depart"><td class="tag">出発</td><td class="time">06:15頃</td><td>小樽ホテル出発</td></tr>
+      <tr class="arrive"><td class="tag">到着目標</td><td class="time">06:30頃</td><td>小樽駅</td></tr>
+      <tr class="other"><td class="tag">移動</td><td class="time">06時台</td><td>小樽 → 札幌　<span class="tbd">※具体列車は未確定</span></td></tr>
+      <tr class="arrive"><td class="tag">到着目標</td><td class="time">07:30</td><td>札幌駅・北斗84号ホーム付近</td></tr>
+      <tr class="depart"><td class="tag">出発</td><td class="time">07:43</td><td>北斗84号</td></tr>
+      <tr class="arrive"><td class="tag">到着</td><td class="time">11:54</td><td>函館駅</td></tr>
+      <tr class="other"><td class="tag">昼食</td><td class="time">12:15〜13:00頃</td><td>函館駅・朝市周辺候補</td></tr>
+      <tr class="prepare"><td class="tag">準備</td><td class="time">13:30頃</td><td>ホテルに荷物預け候補</td></tr>
+      <tr class="arrive"><td class="tag">チェックイン</td><td class="time">15:00</td><td>ホテルグローバルビュー函館</td></tr>
+      <tr class="other"><td class="tag">観光</td><td class="time">午後</td><td>金森赤レンガ倉庫・八幡坂・元町</td></tr>
+      <tr class="other"><td class="tag">夕食</td><td class="time">18:00頃</td><td>未定</td></tr>
+      <tr class="other"><td class="tag">夜</td><td class="time">19:00頃〜</td><td>函館山夜景</td></tr>
+    </table>
+    <p class="note">TODO：<span class="ok">✔ 北斗84号</span>・<span class="ok">✔ 函館ホテル</span>／<span class="todo">□ 小樽→札幌の列車確定</span>・<span class="todo">□ 北斗84号 座席番号</span>・<span class="todo">□ 夕食</span>・<span class="todo">□ ロープウェイ運行確認</span></p>
+  </div>
+</details>
+
+<details>
+  <summary>8/12（水） 函館観光 → 函館空港 → 羽田</summary>
+  <div class="body">
+    <table>
+      <tr><th>区分</th><th>時刻</th><th>内容</th></tr>
+      <tr class="prepare"><td class="tag">準備開始</td><td class="time">07:30頃</td><td>朝食・荷造り</td></tr>
+      <tr class="depart"><td class="tag">出発</td><td class="time">09:00頃</td><td>ホテル出発</td></tr>
+      <tr class="arrive"><td class="tag">到着目標</td><td class="time">09:30頃</td><td>五稜郭</td></tr>
+      <tr class="other"><td class="tag">観光</td><td class="time">午前</td><td>五稜郭・五稜郭タワー</td></tr>
+      <tr class="other"><td class="tag">昼食</td><td class="time">12:00頃</td><td>函館市内</td></tr>
+      <tr class="prepare"><td class="tag">準備</td><td class="time">13:45頃</td><td>ホテルで荷物受取</td></tr>
+      <tr class="depart"><td class="tag">出発</td><td class="time">14:15頃</td><td>函館空港へ　<span class="tbd">※バス時刻は要最終確認</span></td></tr>
+      <tr class="arrive"><td class="tag">到着目標</td><td class="time">14:45頃</td><td>函館空港</td></tr>
+      <tr class="arrive"><td class="tag">到着目標</td><td class="time">15:15頃まで</td><td>保安検査通過</td></tr>
+      <tr class="depart"><td class="tag">出発</td><td class="time">16:45</td><td>AIRDO HD060</td></tr>
+      <tr class="arrive"><td class="tag">到着</td><td class="time">18:10</td><td>羽田空港 第2ターミナル</td></tr>
+      <tr class="other"><td class="tag">帰宅</td><td class="time tbd">未定</td><td>羽田 → 相模大野</td></tr>
+    </table>
+    <p class="note">TODO：<span class="ok">✔ AIRDO HD060</span>／<span class="todo">□ AIRDO 座席番号</span>・<span class="todo">□ 函館空港バス時刻</span>・<span class="todo">□ 帰路確定</span>・<span class="todo">□ オンラインチェックイン</span></p>
+  </div>
+</details>
+
+<div class="card">
+  <h2>予約済みサマリ</h2>
+  <div class="grid">
+    <div>
+      <b>往路：JAL503</b><br>
+      羽田(第1T) → 新千歳<br>
+      8/8 07:15頃 → 08:45頃<br>
+      <span class="note">予約番号は家族へ別途共有</span>
+    </div>
+    <div>
+      <b>復路：AIRDO HD060</b><br>
+      函館 → 羽田(第2T)<br>
+      8/12 16:45 → 18:10<br>
+      <span class="note">予約番号は家族へ別途共有</span>
+    </div>
+    <div>
+      <b>JR 北斗84号</b><br>
+      札幌 → 函館<br>
+      8/11 07:43 → 11:54<br>
+      <span class="note">予約番号は家族へ別途共有</span>
+    </div>
+    <div>
+      <b>空港リムジンバス</b><br>
+      相模大野駅北口 → 羽田第1T<br>
+      8/8 04:40 → 05:55（3名）
+    </div>
+    <div>
+      <b>函館ホテル</b><br>
+      ホテルグローバルビュー函館<br>
+      ジュニアスイート和洋室（バスタブ付き）<br>
+      8/11 IN → 8/12 OUT<br>
+      <span class="note">住所・電話・確認番号は家族へ別途共有</span>
+    </div>
+    <div>
+      <b>宿泊まとめ</b><br>
+      旭川2泊 … <span class="todo">未定</span><br>
+      小樽1泊 … <span class="todo">未定</span><br>
+      函館1泊 … <span class="ok">確定</span>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>未確定タスク（要対応）</h2>
+  <ul>
+    <li><span class="todo">□ 旭川ホテル</span> ／ <span class="todo">□ 小樽ホテル</span> の確定</li>
+    <li><span class="todo">□ 札幌 → 旭川 特急</span> ／ <span class="todo">□ 旭川 → 札幌 特急</span> の予約</li>
+    <li><span class="todo">□ 友人との集合場所・時刻</span> ／ <span class="todo">□ 8/9 の行き先（美瑛か旭山動物園か）</span></li>
+    <li><span class="todo">□ 各交通の座席番号</span>（北斗84号・JAL・AIRDO）</li>
+    <li><span class="todo">□ 函館市内 → 函館空港のバス時刻</span> ／ <span class="todo">□ 羽田 → 相模大野の帰路</span></li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>地図</h2>
+  <p>Google マイマップ（登録スポットは <code>北海道旅行2026_完成版_MyMaps.kml</code> と同一）：<br>
+  <a href="https://www.google.com/maps/d/u/0/edit?mid=1pe4fPuJczRNk2bjMpmThbG26VZyFahU&usp=sharing">マイマップを開く</a></p>
+  <p class="note" style="margin-top:10px">スポット別クイックリンク：</p>
+  <div class="legend">
+    <a href="https://www.google.com/maps?q=ホテルグローバルビュー函館">函館ホテル</a>
+    <a href="https://www.google.com/maps?q=青い池+美瑛">青い池</a>
+    <a href="https://www.google.com/maps?q=小樽運河">小樽運河</a>
+    <a href="https://www.google.com/maps?q=函館山ロープウェイ">函館山</a>
+  </div>
+</div>
+
+<div class="card">
+  <h2>観光候補</h2>
+  <div class="subhead">旭川・美瑛</div>
+  <ul class="check cols">
+    <li><label><input type="checkbox"> 旭山動物園</label></li>
+    <li><label><input type="checkbox"> 四季彩の丘</label></li>
+    <li><label><input type="checkbox"> 青い池</label></li>
+    <li><label><input type="checkbox"> 白ひげの滝</label></li>
+    <li><label><input type="checkbox"> パッチワークの路</label></li>
+    <li><label><input type="checkbox"> 上野ファーム</label></li>
+  </ul>
+  <div class="subhead">小樽</div>
+  <ul class="check cols">
+    <li><label><input type="checkbox"> 三角市場</label></li>
+    <li><label><input type="checkbox"> 小樽運河</label></li>
+    <li><label><input type="checkbox"> 北一硝子</label></li>
+    <li><label><input type="checkbox"> 小樽オルゴール堂</label></li>
+    <li><label><input type="checkbox"> 堺町通り</label></li>
+    <li><label><input type="checkbox"> 寿司・海鮮</label></li>
+  </ul>
+  <div class="subhead">函館</div>
+  <ul class="check cols">
+    <li><label><input type="checkbox"> 函館朝市</label></li>
+    <li><label><input type="checkbox"> 金森赤レンガ倉庫</label></li>
+    <li><label><input type="checkbox"> 八幡坂</label></li>
+    <li><label><input type="checkbox"> 元町</label></li>
+    <li><label><input type="checkbox"> 函館山ロープウェイ</label></li>
+    <li><label><input type="checkbox"> 五稜郭</label></li>
+    <li><label><input type="checkbox"> 五稜郭タワー</label></li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>持ち物チェック</h2>
+  <div class="subhead">必須</div>
+  <ul class="check cols">
+    <li><label><input type="checkbox"> 財布</label></li>
+    <li><label><input type="checkbox"> スマートフォン</label></li>
+    <li><label><input type="checkbox"> 充電器</label></li>
+    <li><label><input type="checkbox"> モバイルバッテリー</label></li>
+    <li><label><input type="checkbox"> クレジットカード</label></li>
+    <li><label><input type="checkbox"> 健康保険証／マイナンバーカード</label></li>
+    <li><label><input type="checkbox"> 常備薬</label></li>
+    <li><label><input type="checkbox"> 着替え</label></li>
+    <li><label><input type="checkbox"> 雨具</label></li>
+    <li><label><input type="checkbox"> 薄手の羽織</label></li>
+  </ul>
+  <div class="subhead">予約・移動</div>
+  <ul class="check cols">
+    <li><label><input type="checkbox"> 航空券情報をスマホ保存</label></li>
+    <li><label><input type="checkbox"> JR予約情報をスマホ保存</label></li>
+    <li><label><input type="checkbox"> バス予約情報をスマホ保存</label></li>
+    <li><label><input type="checkbox"> ホテル予約情報をスマホ保存</label></li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>未定・追記欄</h2>
+  <p class="note">現地で確定した情報を書き込む欄（この画面で入力できますが保存はされません。印刷・スクショ推奨）。</p>
+  <div class="subhead">旭川ホテル</div>
+  <table class="form-tbl">
+    <tr><td>ホテル名</td><td><input></td></tr>
+    <tr><td>住所</td><td><input></td></tr>
+    <tr><td>電話</td><td><input></td></tr>
+    <tr><td>予約番号</td><td><input></td></tr>
+    <tr><td>チェックイン</td><td><input></td></tr>
+    <tr><td>チェックアウト</td><td><input></td></tr>
+  </table>
+  <div class="subhead">小樽ホテル</div>
+  <table class="form-tbl">
+    <tr><td>ホテル名</td><td><input></td></tr>
+    <tr><td>住所</td><td><input></td></tr>
+    <tr><td>電話</td><td><input></td></tr>
+    <tr><td>予約番号</td><td><input></td></tr>
+    <tr><td>チェックイン</td><td><input></td></tr>
+    <tr><td>チェックアウト</td><td><input></td></tr>
+  </table>
+  <div class="subhead">JR 札幌 → 旭川</div>
+  <table class="form-tbl">
+    <tr><td>列車名</td><td><input></td></tr>
+    <tr><td>出発</td><td><input></td></tr>
+    <tr><td>到着</td><td><input></td></tr>
+    <tr><td>号車</td><td><input></td></tr>
+    <tr><td>座席</td><td><input></td></tr>
+    <tr><td>予約番号</td><td><input></td></tr>
+  </table>
+  <div class="subhead">JR 旭川 → 札幌</div>
+  <table class="form-tbl">
+    <tr><td>列車名</td><td><input></td></tr>
+    <tr><td>出発</td><td><input></td></tr>
+    <tr><td>到着</td><td><input></td></tr>
+    <tr><td>号車</td><td><input></td></tr>
+    <tr><td>座席</td><td><input></td></tr>
+    <tr><td>予約番号</td><td><input></td></tr>
+  </table>
+  <div class="subhead">北斗84号</div>
+  <table class="form-tbl">
+    <tr><td>号車</td><td><input></td></tr>
+    <tr><td>座席</td><td><input></td></tr>
+  </table>
+</div>
+
+<div class="card">
+  <h2>旅行メモ</h2>
+  <div class="subhead">良かったこと</div>
+  <textarea class="memo"></textarea>
+  <div class="subhead">改善したいこと</div>
+  <textarea class="memo"></textarea>
+  <div class="subhead">また行きたい場所</div>
+  <textarea class="memo"></textarea>
+  <div class="subhead">写真ベスト5</div>
+  <table class="form-tbl">
+    <tr><td>1</td><td><input></td></tr>
+    <tr><td>2</td><td><input></td></tr>
+    <tr><td>3</td><td><input></td></tr>
+    <tr><td>4</td><td><input></td></tr>
+    <tr><td>5</td><td><input></td></tr>
+  </table>
+</div>
+
+<p class="note" style="text-align:center;margin:24px 0">
+  マスター資料：<code>北海道家族旅行_2026_旅のしおり.md</code>／このVer7は Ver5.1（全日程・判断ルール）＋ Ver6（区分の色分け）＋ Ver4（重要時刻・地図リンク）を1本化し、しおりの全項目（観光候補・持ち物・追記欄・旅行メモ）を含めたものです。
+</p>
+
+</main>
+</body>
+</html>
