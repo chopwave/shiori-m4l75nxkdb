@@ -60,6 +60,8 @@ a{color:#1565c0}
 .form-tbl td:first-child{white-space:nowrap;color:#546e7a;font-size:.85rem;width:34%}
 .form-tbl input{width:100%;border:none;border-bottom:1px solid #bbb;padding:4px 2px;font-size:.9rem;background:transparent}
 .memo{width:100%;min-height:64px;border:1px solid #dfe3ea;border-radius:6px;padding:8px;font:inherit;resize:vertical}
+a.srch{text-decoration:none;margin-left:6px;font-size:1rem;line-height:1}
+.subhead a.srch{margin-left:8px}
 </style>
 </head>
 <body>
@@ -440,5 +442,57 @@ a{color:#1565c0}
 </p>
 
 </main>
+
+<script>
+(function(){
+  function addLinks(target, query, withMap){
+    var q = encodeURIComponent(query);
+    if(withMap){
+      var m = document.createElement('a');
+      m.href = 'https://www.google.com/maps/search/?api=1&query=' + q;
+      m.target = '_blank'; m.rel = 'noopener'; m.title = '地図で見る';
+      m.textContent = '🗺️'; m.className = 'srch';
+      target.appendChild(m);
+    }
+    var w = document.createElement('a');
+    w.href = 'https://www.google.com/search?q=' + q;
+    w.target = '_blank'; w.rel = 'noopener'; w.title = 'ネットで調べる';
+    w.textContent = '🔍'; w.className = 'srch';
+    target.appendChild(w);
+  }
+  function clean(s){ return s.replace(/（[^）]*）/g,'').replace(/[『』]/g,'').trim(); }
+  document.querySelectorAll('.card').forEach(function(card){
+    var h2 = card.querySelector('h2');
+    if(!h2) return;
+    var kind = h2.textContent.trim();
+    if(kind === '観光候補'){
+      var region = '北海道';
+      Array.prototype.forEach.call(card.children, function(el){
+        if(el.className && el.className.indexOf('subhead') >= 0){
+          region = clean(el.textContent);
+        } else if(el.tagName === 'UL'){
+          el.querySelectorAll('li').forEach(function(li){
+            var lb = li.querySelector('label');
+            if(!lb) return;
+            addLinks(li, lb.textContent.trim() + ' ' + region, true);
+          });
+        }
+      });
+    } else if(kind === 'ご当地グルメ'){
+      Array.prototype.forEach.call(card.children, function(el){
+        if(el.className && el.className.indexOf('subhead') >= 0){
+          addLinks(el, clean(el.textContent) + ' ご当地グルメ', true);
+        }
+      });
+    } else if(kind === '聖地巡礼メモ'){
+      Array.prototype.forEach.call(card.children, function(el){
+        if(el.className && el.className.indexOf('subhead') >= 0){
+          addLinks(el, clean(el.textContent) + ' 聖地巡礼 ロケ地', false);
+        }
+      });
+    }
+  });
+})();
+</script>
 </body>
 </html>
