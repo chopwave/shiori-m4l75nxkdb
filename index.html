@@ -362,6 +362,49 @@ a.srch{text-decoration:none;margin-left:6px;font-size:1rem;line-height:1}
 </div>
 
 <div class="card">
+  <h2>お土産リスト</h2>
+  <p class="note">買ったらチェック。定番中心。項目の🔍から検索できます（この画面のチェックは保存されません。印刷・スクショ推奨）。</p>
+  <div class="subhead">旭川・美瑛</div>
+  <ul class="check cols">
+    <li><label><input type="checkbox"> き花（壺屋総本店）</label></li>
+    <li><label><input type="checkbox"> 旭川ラーメン（乾麺・藤原製麺）</label></li>
+    <li><label><input type="checkbox"> 美瑛選果（コーン・じゃがいものお菓子）</label></li>
+    <li><label><input type="checkbox"> びえいのコーンぱん</label></li>
+  </ul>
+  <div class="subhead">砂川（スイートロード）</div>
+  <ul class="check cols">
+    <li><label><input type="checkbox"> 北菓楼（夢不思議・妖精の森・バウムクーヘン）</label></li>
+    <li><label><input type="checkbox"> 北菓楼 開拓おかき</label></li>
+    <li><label><input type="checkbox"> ナカヤ菓子店（なんこう志るこ）</label></li>
+  </ul>
+  <div class="subhead">小樽</div>
+  <ul class="check cols">
+    <li><label><input type="checkbox"> ルタオ（ドゥーブルフロマージュ）</label></li>
+    <li><label><input type="checkbox"> あまとう（マロンコロン）</label></li>
+    <li><label><input type="checkbox"> かま栄（かまぼこ）</label></li>
+    <li><label><input type="checkbox"> 北一硝子（ガラス製品）</label></li>
+    <li><label><input type="checkbox"> 小樽オルゴール堂（オルゴール）</label></li>
+  </ul>
+  <div class="subhead">函館</div>
+  <ul class="check cols">
+    <li><label><input type="checkbox"> トラピストクッキー・バター飴</label></li>
+    <li><label><input type="checkbox"> スナッフルス（チーズオムレット）</label></li>
+    <li><label><input type="checkbox"> 五島軒 函館カレー</label></li>
+    <li><label><input type="checkbox"> いかめし（森町・阿部商店）</label></li>
+  </ul>
+  <div class="subhead">北海道定番（どさんこプラザ・空港などで購入可）</div>
+  <ul class="check cols">
+    <li><label><input type="checkbox"> 白い恋人（石屋製菓）</label></li>
+    <li><label><input type="checkbox"> 六花亭 マルセイバターサンド</label></li>
+    <li><label><input type="checkbox"> ロイズ 生チョコ・ポテトチップチョコ</label></li>
+    <li><label><input type="checkbox"> じゃがポックル（カルビー）</label></li>
+    <li><label><input type="checkbox"> 石屋製菓 美冬</label></li>
+    <li><label><input type="checkbox"> 札幌農学校クッキー（きのとや）</label></li>
+    <li><label><input type="checkbox"> とうきびチョコ（ホリ）</label></li>
+  </ul>
+</div>
+
+<div class="card">
   <h2>持ち物チェック</h2>
   <div class="subhead">必須</div>
   <ul class="check cols">
@@ -494,6 +537,16 @@ a.srch{text-decoration:none;margin-left:6px;font-size:1rem;line-height:1}
       Array.prototype.forEach.call(card.children, function(el){
         if(el.className && el.className.indexOf('subhead') >= 0){
           addLinks(el, clean(el.textContent) + ' ご当地グルメ', true);
+        }
+      });
+    } else if(kind === 'お土産リスト'){
+      Array.prototype.forEach.call(card.children, function(el){
+        if(el.tagName === 'UL'){
+          el.querySelectorAll('li').forEach(function(li){
+            var lb = li.querySelector('label');
+            if(!lb) return;
+            addLinks(li, clean(lb.textContent) + ' お土産 北海道', false);
+          });
         }
       });
     } else if(kind === '聖地巡礼メモ'){
