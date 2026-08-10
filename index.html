@@ -106,7 +106,7 @@ a.srch{text-decoration:none;margin-left:6px;font-size:1rem;line-height:1}
 
 <h2 style="margin:18px 4px 4px;font-size:1.05rem">日別タイムライン</h2>
 
-<details open>
+<details>
   <summary>8/8（土） 相模大野 → 羽田 → 新千歳 → 旭川</summary>
   <div class="body">
     <table>
@@ -504,6 +504,42 @@ a.srch{text-decoration:none;margin-left:6px;font-size:1rem;line-height:1}
       });
     }
   });
+
+  // 日別タイムライン：当日の日付のセクションを開く（旅程前は初日、旅程後は最終日）
+  (function openTodaysDay(){
+    var h2 = Array.prototype.filter.call(document.querySelectorAll('h2'), function(el){
+      return el.textContent.trim() === '日別タイムライン';
+    })[0];
+    if(!h2) return;
+    var days = [];
+    var el = h2.nextElementSibling;
+    while(el){
+      if(el.tagName === 'DETAILS'){
+        var sm = el.querySelector('summary');
+        var m = sm && sm.textContent.match(/(\d{1,2})\s*\/\s*(\d{1,2})/);
+        if(m) days.push({ el: el, month: +m[1], day: +m[2] });
+      } else if(el.tagName === 'H2'){
+        break; // 次の見出しでタイムライン終了
+      }
+      el = el.nextElementSibling;
+    }
+    if(!days.length) return;
+    var now = new Date();
+    var todayKey = (now.getMonth() + 1) * 100 + now.getDate();
+    var target = null;
+    for(var i = 0; i < days.length; i++){
+      var key = days[i].month * 100 + days[i].day;
+      if(key === todayKey){ target = days[i]; break; }
+    }
+    if(!target){
+      var firstKey = days[0].month * 100 + days[0].day;
+      var lastKey = days[days.length - 1].month * 100 + days[days.length - 1].day;
+      target = todayKey < firstKey ? days[0]
+             : todayKey > lastKey ? days[days.length - 1]
+             : days[0];
+    }
+    days.forEach(function(d){ d.el.open = (d === target); });
+  })();
 })();
 </script>
 </body>
