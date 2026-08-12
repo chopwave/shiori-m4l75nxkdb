@@ -279,12 +279,12 @@ a.srch{text-decoration:none;margin-left:6px;font-size:1rem;line-height:1}
 </div>
 
 <div class="card">
-  <h2>未確定タスク（要対応）</h2>
+  <h2>交通・タスク（すべて完了）</h2>
   <ul>
     <li><span class="ok">✔ 札幌 → 旭川（8/8・バス利用）</span> ／ <span class="ok">✔ 砂川 → 札幌（8/10・11:38 特急）</span></li>
-    <li><span class="ok">✔ 友人と集合（8/8 18:00 炭焼あぶりや一期一会）</span> ／ <span class="ok">✔ 8/9 実施（美瑛・北鎮記念館・神居古潭）</span></li>
-    <li><span class="todo">□ 各交通の座席番号</span>（北斗84号・JAL・AIRDO）</li>
-    <li><span class="todo">□ 函館市内 → 函館空港のバス時刻</span> ／ <span class="todo">□ 羽田 → 相模大野の帰路</span></li>
+    <li><span class="ok">✔ 友人と集合（8/8 18:30 炭焼あぶりや一期一会）</span> ／ <span class="ok">✔ 8/9 実施（美瑛・北鎮記念館・神居古潭）</span></li>
+    <li><span class="ok">✔ 各交通の座席番号（北斗84号・JAL・AIRDO）</span></li>
+    <li><span class="ok">✔ 函館市内 → 函館空港（タクシー）</span> ／ <span class="ok">✔ 羽田 → 相模大野（空港連絡バス 19:15発）</span></li>
   </ul>
 </div>
 
@@ -443,66 +443,21 @@ a.srch{text-decoration:none;margin-left:6px;font-size:1rem;line-height:1}
 </div>
 
 <div class="card">
-  <h2>未定・追記欄</h2>
-  <p class="note">現地で確定した情報を書き込む欄（この画面で入力できますが保存はされません。印刷・スクショ推奨）。</p>
-  <div class="subhead">旭川ホテル</div>
-  <table class="form-tbl">
-    <tr><td>ホテル名</td><td><input value="ホテルアマネク旭川"></td></tr>
-    <tr><td>住所</td><td><input></td></tr>
-    <tr><td>電話</td><td><input></td></tr>
-    <tr><td>予約番号</td><td><input></td></tr>
-    <tr><td>チェックイン</td><td><input></td></tr>
-    <tr><td>チェックアウト</td><td><input></td></tr>
-  </table>
-  <div class="subhead">小樽ホテル</div>
-  <table class="form-tbl">
-    <tr><td>ホテル名</td><td><input value="ホテル・トリフィート小樽運河"></td></tr>
-    <tr><td>住所</td><td><input></td></tr>
-    <tr><td>電話</td><td><input></td></tr>
-    <tr><td>予約番号</td><td><input></td></tr>
-    <tr><td>チェックイン</td><td><input></td></tr>
-    <tr><td>チェックアウト</td><td><input></td></tr>
-  </table>
-  <div class="subhead">JR 札幌 → 旭川</div>
-  <table class="form-tbl">
-    <tr><td>列車名</td><td><input></td></tr>
-    <tr><td>出発</td><td><input></td></tr>
-    <tr><td>到着</td><td><input></td></tr>
-    <tr><td>号車</td><td><input></td></tr>
-    <tr><td>座席</td><td><input></td></tr>
-    <tr><td>予約番号</td><td><input></td></tr>
-  </table>
-  <div class="subhead">JR 旭川 → 札幌</div>
-  <table class="form-tbl">
-    <tr><td>列車名</td><td><input></td></tr>
-    <tr><td>出発</td><td><input></td></tr>
-    <tr><td>到着</td><td><input></td></tr>
-    <tr><td>号車</td><td><input></td></tr>
-    <tr><td>座席</td><td><input></td></tr>
-    <tr><td>予約番号</td><td><input></td></tr>
-  </table>
-  <div class="subhead">北斗84号</div>
-  <table class="form-tbl">
-    <tr><td>号車</td><td><input></td></tr>
-    <tr><td>座席</td><td><input></td></tr>
-  </table>
-</div>
-
-<div class="card">
   <h2>旅行メモ</h2>
+  <p class="note">入力内容はこの端末のブラウザに自動保存されます（同じブラウザで開き直すと復元されます。他の端末とは共有されません）。</p>
   <div class="subhead">良かったこと</div>
-  <textarea class="memo"></textarea>
+  <textarea class="memo" data-k="memo-good"></textarea>
   <div class="subhead">改善したいこと</div>
-  <textarea class="memo"></textarea>
+  <textarea class="memo" data-k="memo-improve"></textarea>
   <div class="subhead">また行きたい場所</div>
-  <textarea class="memo"></textarea>
+  <textarea class="memo" data-k="memo-again"></textarea>
   <div class="subhead">写真ベスト5</div>
   <table class="form-tbl">
-    <tr><td>1</td><td><input></td></tr>
-    <tr><td>2</td><td><input></td></tr>
-    <tr><td>3</td><td><input></td></tr>
-    <tr><td>4</td><td><input></td></tr>
-    <tr><td>5</td><td><input></td></tr>
+    <tr><td>1</td><td><input data-k="photo-1"></td></tr>
+    <tr><td>2</td><td><input data-k="photo-2"></td></tr>
+    <tr><td>3</td><td><input data-k="photo-3"></td></tr>
+    <tr><td>4</td><td><input data-k="photo-4"></td></tr>
+    <tr><td>5</td><td><input data-k="photo-5"></td></tr>
   </table>
 </div>
 
@@ -607,6 +562,16 @@ a.srch{text-decoration:none;margin-left:6px;font-size:1rem;line-height:1}
     }
     days.forEach(function(d){ d.el.open = (d === target); });
   })();
+})();
+
+// 旅行メモ：入力内容を端末のブラウザ(localStorage)に自動保存・復元
+(function(){
+  var fields = document.querySelectorAll('[data-k]');
+  Array.prototype.forEach.call(fields, function(f){
+    var key = 'shiori-hokkaido2026:' + f.getAttribute('data-k');
+    try { var v = localStorage.getItem(key); if(v !== null) f.value = v; } catch(e){}
+    f.addEventListener('input', function(){ try { localStorage.setItem(key, f.value); } catch(e){} });
+  });
 })();
 </script>
 </body>
